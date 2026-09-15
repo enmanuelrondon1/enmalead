@@ -1,0 +1,89 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+enum Plan {
+  FREE
+  STARTER
+  PRO
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  CLOSED
+}
+
+model Agency {
+  id              String        @id @default(cuid())
+  slug            String        @unique
+  name            String
+  assistantPrompt String?
+  users           User[]
+  properties      Property[]
+  subscription    Subscription?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Subscription {
+  id               String   @id @default(cuid())
+  agencyId         String   @unique
+  agency           Agency   @relation(fields: [agencyId], references: [id])
+  stripeCustomerId String?
+  stripeSubId      String?
+  plan             Plan     @default(FREE)
+  status           String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model User {
+  id        String   @id @default(cuid())
+  agencyId  String
+  agency    Agency   @relation(fields: [agencyId], references: [id])
+  name      String?
+  email     String   @unique
+  password  String?
+  role      Role     @default(MEMBER)
+  createdAt DateTime @default(now())
+}
+
+model Property {
+  id          String      @id @default(cuid())
+  agencyId    String
+  agency      Agency      @relation(fields: [agencyId], references: [id])
+  title       String
+  description String?
+  price       Float
+  location    String
+  latitude    Float?
+  longitude   Float?
+  amenities   String[]
+  images      String[]
+  voiceLeads  VoiceLead[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model VoiceLead {
+  id                 String     @id @default(cuid())
+  propertyId         String
+  property           Property   @relation(fields: [propertyId], references: [id])
+  name               String?
+  contact            String?
+  preferredVisitTime String?
+  status             LeadStatus @default(NEW)
+  createdAt          DateTime   @default(now())
+}

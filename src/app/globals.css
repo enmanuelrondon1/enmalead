@@ -24,3 +24,17 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@theme {
+  --color-ocean-950: #0B2545;
+  --color-ocean-900: #0F2F58;
+  --color-ocean-800: #134074;
+  --color-ocean-600: #2C5C99;
+  --color-ocean-400: #5B9BD5;
+  --color-ocean-200: #A9CFEB;
+  --color-ocean-100: #DCEAF7;
+  --color-ocean-50: #F2F8FD;
+
+  --color-accent: #00D9FF;
+  --color-accent-dim: #0BAFD0;
+}
