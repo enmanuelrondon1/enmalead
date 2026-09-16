@@ -31,11 +31,9 @@ export function buildAssistantOverrides({
   return {
     variableValues: {
       agencyName,
+      agencyId,
       assistantTone: assistantTone ?? "cálido y profesional",
       propertiesList: buildPropertiesList(properties),
-    },
-    metadata: {
-      agencyId,
     },
   };
 }

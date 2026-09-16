@@ -12,15 +12,25 @@ export async function POST(req: NextRequest) {
     }
 
     const structuredData = message.artifact?.structuredOutputs;
-    const agencyId = message.call?.metadata?.agencyId;
 
-    if (!structuredData || !agencyId) {
-      console.warn("Webhook Vapi: faltan structuredOutputs o agencyId", { agencyId });
+    if (!structuredData) {
+      console.warn("Webhook Vapi: no hay structuredOutputs");
+      return NextResponse.json({ received: true });
+    }
+
+    const entry = Object.values(structuredData).find(
+      (item: any) => item?.name === "interes_visitante_enmalead"
+    ) as { result?: Record<string, string> } | undefined;
+
+    const leadData = entry?.result;
+
+    if (!leadData?.agencyId) {
+      console.warn("Webhook Vapi: falta agencyId en leadData", leadData);
       return NextResponse.json({ received: true });
     }
 
     const firstProperty = await prisma.property.findFirst({
-      where: { agencyId },
+      where: { agencyId: leadData.agencyId },
       orderBy: { createdAt: "asc" },
     });
 
@@ -32,9 +42,9 @@ export async function POST(req: NextRequest) {
     await prisma.voiceLead.create({
       data: {
         propertyId: firstProperty.id,
-        name: structuredData.name ?? null,
-        contact: structuredData.contact ?? null,
-        preferredVisitTime: structuredData.preferredVisitTime ?? null,
+        name: leadData.name ?? null,
+        contact: leadData.contact ?? null,
+        preferredVisitTime: leadData.preferredVisitTime ?? null,
       },
     });
 
