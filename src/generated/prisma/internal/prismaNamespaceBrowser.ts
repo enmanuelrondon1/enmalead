@@ -133,7 +133,9 @@ export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typ
 
 export const VoiceLeadScalarFieldEnum = {
   id: 'id',
+  agencyId: 'agencyId',
   propertyId: 'propertyId',
+  propertyOfInterest: 'propertyOfInterest',
   name: 'name',
   contact: 'contact',
   preferredVisitTime: 'preferredVisitTime',

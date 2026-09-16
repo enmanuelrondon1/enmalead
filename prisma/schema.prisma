@@ -32,6 +32,7 @@ model Agency {
   assistantPrompt String?
   users           User[]
   properties      Property[]
+  voiceLeads      VoiceLead[]
   subscription    Subscription?
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
@@ -79,8 +80,11 @@ model Property {
 
 model VoiceLead {
   id                 String     @id @default(cuid())
-  propertyId         String
-  property           Property   @relation(fields: [propertyId], references: [id])
+  agencyId           String
+  agency             Agency     @relation(fields: [agencyId], references: [id])
+  propertyId         String?
+  property           Property?  @relation(fields: [propertyId], references: [id])
+  propertyOfInterest String?
   name               String?
   contact            String?
   preferredVisitTime String?

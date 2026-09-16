@@ -29,21 +29,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true });
     }
 
-    const firstProperty = await prisma.property.findFirst({
-      where: { agencyId: leadData.agencyId },
-      orderBy: { createdAt: "asc" },
+    const agency = await prisma.agency.findUnique({
+      where: { id: leadData.agencyId },
     });
 
-    if (!firstProperty) {
-      console.warn("Webhook Vapi: agencia sin propiedades, no se puede asociar el lead");
+    if (!agency) {
+      console.warn("Webhook Vapi: agencyId no coincide con ninguna agencia", leadData.agencyId);
       return NextResponse.json({ received: true });
     }
 
     await prisma.voiceLead.create({
       data: {
-        propertyId: firstProperty.id,
+        agencyId: leadData.agencyId,
         name: leadData.name ?? null,
         contact: leadData.contact ?? null,
+        propertyOfInterest: leadData.propertyOfInterest ?? null,
         preferredVisitTime: leadData.preferredVisitTime ?? null,
       },
     });

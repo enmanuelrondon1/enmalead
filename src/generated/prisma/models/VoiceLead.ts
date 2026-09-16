@@ -26,7 +26,9 @@ export type AggregateVoiceLead = {
 
 export type VoiceLeadMinAggregateOutputType = {
   id: string | null
+  agencyId: string | null
   propertyId: string | null
+  propertyOfInterest: string | null
   name: string | null
   contact: string | null
   preferredVisitTime: string | null
@@ -36,7 +38,9 @@ export type VoiceLeadMinAggregateOutputType = {
 
 export type VoiceLeadMaxAggregateOutputType = {
   id: string | null
+  agencyId: string | null
   propertyId: string | null
+  propertyOfInterest: string | null
   name: string | null
   contact: string | null
   preferredVisitTime: string | null
@@ -46,7 +50,9 @@ export type VoiceLeadMaxAggregateOutputType = {
 
 export type VoiceLeadCountAggregateOutputType = {
   id: number
+  agencyId: number
   propertyId: number
+  propertyOfInterest: number
   name: number
   contact: number
   preferredVisitTime: number
@@ -58,7 +64,9 @@ export type VoiceLeadCountAggregateOutputType = {
 
 export type VoiceLeadMinAggregateInputType = {
   id?: true
+  agencyId?: true
   propertyId?: true
+  propertyOfInterest?: true
   name?: true
   contact?: true
   preferredVisitTime?: true
@@ -68,7 +76,9 @@ export type VoiceLeadMinAggregateInputType = {
 
 export type VoiceLeadMaxAggregateInputType = {
   id?: true
+  agencyId?: true
   propertyId?: true
+  propertyOfInterest?: true
   name?: true
   contact?: true
   preferredVisitTime?: true
@@ -78,7 +88,9 @@ export type VoiceLeadMaxAggregateInputType = {
 
 export type VoiceLeadCountAggregateInputType = {
   id?: true
+  agencyId?: true
   propertyId?: true
+  propertyOfInterest?: true
   name?: true
   contact?: true
   preferredVisitTime?: true
@@ -161,7 +173,9 @@ export type VoiceLeadGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type VoiceLeadGroupByOutputType = {
   id: string
-  propertyId: string
+  agencyId: string
+  propertyId: string | null
+  propertyOfInterest: string | null
   name: string | null
   contact: string | null
   preferredVisitTime: string | null
@@ -192,23 +206,29 @@ export type VoiceLeadWhereInput = {
   OR?: Prisma.VoiceLeadWhereInput[]
   NOT?: Prisma.VoiceLeadWhereInput | Prisma.VoiceLeadWhereInput[]
   id?: Prisma.StringFilter<"VoiceLead"> | string
-  propertyId?: Prisma.StringFilter<"VoiceLead"> | string
+  agencyId?: Prisma.StringFilter<"VoiceLead"> | string
+  propertyId?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
+  propertyOfInterest?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
   name?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
   contact?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
   preferredVisitTime?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
   status?: Prisma.EnumLeadStatusFilter<"VoiceLead"> | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFilter<"VoiceLead"> | Date | string
-  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
+  agency?: Prisma.XOR<Prisma.AgencyScalarRelationFilter, Prisma.AgencyWhereInput>
+  property?: Prisma.XOR<Prisma.PropertyNullableScalarRelationFilter, Prisma.PropertyWhereInput> | null
 }
 
 export type VoiceLeadOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  propertyId?: Prisma.SortOrder
+  agencyId?: Prisma.SortOrder
+  propertyId?: Prisma.SortOrderInput | Prisma.SortOrder
+  propertyOfInterest?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   contact?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredVisitTime?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  agency?: Prisma.AgencyOrderByWithRelationInput
   property?: Prisma.PropertyOrderByWithRelationInput
 }
 
@@ -217,18 +237,23 @@ export type VoiceLeadWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.VoiceLeadWhereInput | Prisma.VoiceLeadWhereInput[]
   OR?: Prisma.VoiceLeadWhereInput[]
   NOT?: Prisma.VoiceLeadWhereInput | Prisma.VoiceLeadWhereInput[]
-  propertyId?: Prisma.StringFilter<"VoiceLead"> | string
+  agencyId?: Prisma.StringFilter<"VoiceLead"> | string
+  propertyId?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
+  propertyOfInterest?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
   name?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
   contact?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
   preferredVisitTime?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
   status?: Prisma.EnumLeadStatusFilter<"VoiceLead"> | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFilter<"VoiceLead"> | Date | string
-  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
+  agency?: Prisma.XOR<Prisma.AgencyScalarRelationFilter, Prisma.AgencyWhereInput>
+  property?: Prisma.XOR<Prisma.PropertyNullableScalarRelationFilter, Prisma.PropertyWhereInput> | null
 }, "id">
 
 export type VoiceLeadOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  propertyId?: Prisma.SortOrder
+  agencyId?: Prisma.SortOrder
+  propertyId?: Prisma.SortOrderInput | Prisma.SortOrder
+  propertyOfInterest?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   contact?: Prisma.SortOrderInput | Prisma.SortOrder
   preferredVisitTime?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -244,7 +269,9 @@ export type VoiceLeadScalarWhereWithAggregatesInput = {
   OR?: Prisma.VoiceLeadScalarWhereWithAggregatesInput[]
   NOT?: Prisma.VoiceLeadScalarWhereWithAggregatesInput | Prisma.VoiceLeadScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"VoiceLead"> | string
-  propertyId?: Prisma.StringWithAggregatesFilter<"VoiceLead"> | string
+  agencyId?: Prisma.StringWithAggregatesFilter<"VoiceLead"> | string
+  propertyId?: Prisma.StringNullableWithAggregatesFilter<"VoiceLead"> | string | null
+  propertyOfInterest?: Prisma.StringNullableWithAggregatesFilter<"VoiceLead"> | string | null
   name?: Prisma.StringNullableWithAggregatesFilter<"VoiceLead"> | string | null
   contact?: Prisma.StringNullableWithAggregatesFilter<"VoiceLead"> | string | null
   preferredVisitTime?: Prisma.StringNullableWithAggregatesFilter<"VoiceLead"> | string | null
@@ -254,17 +281,21 @@ export type VoiceLeadScalarWhereWithAggregatesInput = {
 
 export type VoiceLeadCreateInput = {
   id?: string
+  propertyOfInterest?: string | null
   name?: string | null
   contact?: string | null
   preferredVisitTime?: string | null
   status?: $Enums.LeadStatus
   createdAt?: Date | string
-  property: Prisma.PropertyCreateNestedOneWithoutVoiceLeadsInput
+  agency: Prisma.AgencyCreateNestedOneWithoutVoiceLeadsInput
+  property?: Prisma.PropertyCreateNestedOneWithoutVoiceLeadsInput
 }
 
 export type VoiceLeadUncheckedCreateInput = {
   id?: string
-  propertyId: string
+  agencyId: string
+  propertyId?: string | null
+  propertyOfInterest?: string | null
   name?: string | null
   contact?: string | null
   preferredVisitTime?: string | null
@@ -274,17 +305,21 @@ export type VoiceLeadUncheckedCreateInput = {
 
 export type VoiceLeadUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  property?: Prisma.PropertyUpdateOneRequiredWithoutVoiceLeadsNestedInput
+  agency?: Prisma.AgencyUpdateOneRequiredWithoutVoiceLeadsNestedInput
+  property?: Prisma.PropertyUpdateOneWithoutVoiceLeadsNestedInput
 }
 
 export type VoiceLeadUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  agencyId?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -294,7 +329,9 @@ export type VoiceLeadUncheckedUpdateInput = {
 
 export type VoiceLeadCreateManyInput = {
   id?: string
-  propertyId: string
+  agencyId: string
+  propertyId?: string | null
+  propertyOfInterest?: string | null
   name?: string | null
   contact?: string | null
   preferredVisitTime?: string | null
@@ -304,6 +341,7 @@ export type VoiceLeadCreateManyInput = {
 
 export type VoiceLeadUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -313,7 +351,9 @@ export type VoiceLeadUpdateManyMutationInput = {
 
 export type VoiceLeadUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  propertyId?: Prisma.StringFieldUpdateOperationsInput | string
+  agencyId?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -333,7 +373,9 @@ export type VoiceLeadOrderByRelationAggregateInput = {
 
 export type VoiceLeadCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  agencyId?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
+  propertyOfInterest?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   preferredVisitTime?: Prisma.SortOrder
@@ -343,7 +385,9 @@ export type VoiceLeadCountOrderByAggregateInput = {
 
 export type VoiceLeadMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  agencyId?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
+  propertyOfInterest?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   preferredVisitTime?: Prisma.SortOrder
@@ -353,12 +397,56 @@ export type VoiceLeadMaxOrderByAggregateInput = {
 
 export type VoiceLeadMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  agencyId?: Prisma.SortOrder
   propertyId?: Prisma.SortOrder
+  propertyOfInterest?: Prisma.SortOrder
   name?: Prisma.SortOrder
   contact?: Prisma.SortOrder
   preferredVisitTime?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type VoiceLeadCreateNestedManyWithoutAgencyInput = {
+  create?: Prisma.XOR<Prisma.VoiceLeadCreateWithoutAgencyInput, Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput> | Prisma.VoiceLeadCreateWithoutAgencyInput[] | Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput[]
+  connectOrCreate?: Prisma.VoiceLeadCreateOrConnectWithoutAgencyInput | Prisma.VoiceLeadCreateOrConnectWithoutAgencyInput[]
+  createMany?: Prisma.VoiceLeadCreateManyAgencyInputEnvelope
+  connect?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+}
+
+export type VoiceLeadUncheckedCreateNestedManyWithoutAgencyInput = {
+  create?: Prisma.XOR<Prisma.VoiceLeadCreateWithoutAgencyInput, Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput> | Prisma.VoiceLeadCreateWithoutAgencyInput[] | Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput[]
+  connectOrCreate?: Prisma.VoiceLeadCreateOrConnectWithoutAgencyInput | Prisma.VoiceLeadCreateOrConnectWithoutAgencyInput[]
+  createMany?: Prisma.VoiceLeadCreateManyAgencyInputEnvelope
+  connect?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+}
+
+export type VoiceLeadUpdateManyWithoutAgencyNestedInput = {
+  create?: Prisma.XOR<Prisma.VoiceLeadCreateWithoutAgencyInput, Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput> | Prisma.VoiceLeadCreateWithoutAgencyInput[] | Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput[]
+  connectOrCreate?: Prisma.VoiceLeadCreateOrConnectWithoutAgencyInput | Prisma.VoiceLeadCreateOrConnectWithoutAgencyInput[]
+  upsert?: Prisma.VoiceLeadUpsertWithWhereUniqueWithoutAgencyInput | Prisma.VoiceLeadUpsertWithWhereUniqueWithoutAgencyInput[]
+  createMany?: Prisma.VoiceLeadCreateManyAgencyInputEnvelope
+  set?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+  disconnect?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+  delete?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+  connect?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+  update?: Prisma.VoiceLeadUpdateWithWhereUniqueWithoutAgencyInput | Prisma.VoiceLeadUpdateWithWhereUniqueWithoutAgencyInput[]
+  updateMany?: Prisma.VoiceLeadUpdateManyWithWhereWithoutAgencyInput | Prisma.VoiceLeadUpdateManyWithWhereWithoutAgencyInput[]
+  deleteMany?: Prisma.VoiceLeadScalarWhereInput | Prisma.VoiceLeadScalarWhereInput[]
+}
+
+export type VoiceLeadUncheckedUpdateManyWithoutAgencyNestedInput = {
+  create?: Prisma.XOR<Prisma.VoiceLeadCreateWithoutAgencyInput, Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput> | Prisma.VoiceLeadCreateWithoutAgencyInput[] | Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput[]
+  connectOrCreate?: Prisma.VoiceLeadCreateOrConnectWithoutAgencyInput | Prisma.VoiceLeadCreateOrConnectWithoutAgencyInput[]
+  upsert?: Prisma.VoiceLeadUpsertWithWhereUniqueWithoutAgencyInput | Prisma.VoiceLeadUpsertWithWhereUniqueWithoutAgencyInput[]
+  createMany?: Prisma.VoiceLeadCreateManyAgencyInputEnvelope
+  set?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+  disconnect?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+  delete?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+  connect?: Prisma.VoiceLeadWhereUniqueInput | Prisma.VoiceLeadWhereUniqueInput[]
+  update?: Prisma.VoiceLeadUpdateWithWhereUniqueWithoutAgencyInput | Prisma.VoiceLeadUpdateWithWhereUniqueWithoutAgencyInput[]
+  updateMany?: Prisma.VoiceLeadUpdateManyWithWhereWithoutAgencyInput | Prisma.VoiceLeadUpdateManyWithWhereWithoutAgencyInput[]
+  deleteMany?: Prisma.VoiceLeadScalarWhereInput | Prisma.VoiceLeadScalarWhereInput[]
 }
 
 export type VoiceLeadCreateNestedManyWithoutPropertyInput = {
@@ -407,8 +495,21 @@ export type EnumLeadStatusFieldUpdateOperationsInput = {
   set?: $Enums.LeadStatus
 }
 
-export type VoiceLeadCreateWithoutPropertyInput = {
+export type VoiceLeadCreateWithoutAgencyInput = {
   id?: string
+  propertyOfInterest?: string | null
+  name?: string | null
+  contact?: string | null
+  preferredVisitTime?: string | null
+  status?: $Enums.LeadStatus
+  createdAt?: Date | string
+  property?: Prisma.PropertyCreateNestedOneWithoutVoiceLeadsInput
+}
+
+export type VoiceLeadUncheckedCreateWithoutAgencyInput = {
+  id?: string
+  propertyId?: string | null
+  propertyOfInterest?: string | null
   name?: string | null
   contact?: string | null
   preferredVisitTime?: string | null
@@ -416,8 +517,62 @@ export type VoiceLeadCreateWithoutPropertyInput = {
   createdAt?: Date | string
 }
 
+export type VoiceLeadCreateOrConnectWithoutAgencyInput = {
+  where: Prisma.VoiceLeadWhereUniqueInput
+  create: Prisma.XOR<Prisma.VoiceLeadCreateWithoutAgencyInput, Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput>
+}
+
+export type VoiceLeadCreateManyAgencyInputEnvelope = {
+  data: Prisma.VoiceLeadCreateManyAgencyInput | Prisma.VoiceLeadCreateManyAgencyInput[]
+  skipDuplicates?: boolean
+}
+
+export type VoiceLeadUpsertWithWhereUniqueWithoutAgencyInput = {
+  where: Prisma.VoiceLeadWhereUniqueInput
+  update: Prisma.XOR<Prisma.VoiceLeadUpdateWithoutAgencyInput, Prisma.VoiceLeadUncheckedUpdateWithoutAgencyInput>
+  create: Prisma.XOR<Prisma.VoiceLeadCreateWithoutAgencyInput, Prisma.VoiceLeadUncheckedCreateWithoutAgencyInput>
+}
+
+export type VoiceLeadUpdateWithWhereUniqueWithoutAgencyInput = {
+  where: Prisma.VoiceLeadWhereUniqueInput
+  data: Prisma.XOR<Prisma.VoiceLeadUpdateWithoutAgencyInput, Prisma.VoiceLeadUncheckedUpdateWithoutAgencyInput>
+}
+
+export type VoiceLeadUpdateManyWithWhereWithoutAgencyInput = {
+  where: Prisma.VoiceLeadScalarWhereInput
+  data: Prisma.XOR<Prisma.VoiceLeadUpdateManyMutationInput, Prisma.VoiceLeadUncheckedUpdateManyWithoutAgencyInput>
+}
+
+export type VoiceLeadScalarWhereInput = {
+  AND?: Prisma.VoiceLeadScalarWhereInput | Prisma.VoiceLeadScalarWhereInput[]
+  OR?: Prisma.VoiceLeadScalarWhereInput[]
+  NOT?: Prisma.VoiceLeadScalarWhereInput | Prisma.VoiceLeadScalarWhereInput[]
+  id?: Prisma.StringFilter<"VoiceLead"> | string
+  agencyId?: Prisma.StringFilter<"VoiceLead"> | string
+  propertyId?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
+  propertyOfInterest?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
+  name?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
+  contact?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
+  preferredVisitTime?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
+  status?: Prisma.EnumLeadStatusFilter<"VoiceLead"> | $Enums.LeadStatus
+  createdAt?: Prisma.DateTimeFilter<"VoiceLead"> | Date | string
+}
+
+export type VoiceLeadCreateWithoutPropertyInput = {
+  id?: string
+  propertyOfInterest?: string | null
+  name?: string | null
+  contact?: string | null
+  preferredVisitTime?: string | null
+  status?: $Enums.LeadStatus
+  createdAt?: Date | string
+  agency: Prisma.AgencyCreateNestedOneWithoutVoiceLeadsInput
+}
+
 export type VoiceLeadUncheckedCreateWithoutPropertyInput = {
   id?: string
+  agencyId: string
+  propertyOfInterest?: string | null
   name?: string | null
   contact?: string | null
   preferredVisitTime?: string | null
@@ -451,21 +606,54 @@ export type VoiceLeadUpdateManyWithWhereWithoutPropertyInput = {
   data: Prisma.XOR<Prisma.VoiceLeadUpdateManyMutationInput, Prisma.VoiceLeadUncheckedUpdateManyWithoutPropertyInput>
 }
 
-export type VoiceLeadScalarWhereInput = {
-  AND?: Prisma.VoiceLeadScalarWhereInput | Prisma.VoiceLeadScalarWhereInput[]
-  OR?: Prisma.VoiceLeadScalarWhereInput[]
-  NOT?: Prisma.VoiceLeadScalarWhereInput | Prisma.VoiceLeadScalarWhereInput[]
-  id?: Prisma.StringFilter<"VoiceLead"> | string
-  propertyId?: Prisma.StringFilter<"VoiceLead"> | string
-  name?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
-  contact?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
-  preferredVisitTime?: Prisma.StringNullableFilter<"VoiceLead"> | string | null
-  status?: Prisma.EnumLeadStatusFilter<"VoiceLead"> | $Enums.LeadStatus
-  createdAt?: Prisma.DateTimeFilter<"VoiceLead"> | Date | string
+export type VoiceLeadCreateManyAgencyInput = {
+  id?: string
+  propertyId?: string | null
+  propertyOfInterest?: string | null
+  name?: string | null
+  contact?: string | null
+  preferredVisitTime?: string | null
+  status?: $Enums.LeadStatus
+  createdAt?: Date | string
+}
+
+export type VoiceLeadUpdateWithoutAgencyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  property?: Prisma.PropertyUpdateOneWithoutVoiceLeadsNestedInput
+}
+
+export type VoiceLeadUncheckedUpdateWithoutAgencyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type VoiceLeadUncheckedUpdateManyWithoutAgencyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type VoiceLeadCreateManyPropertyInput = {
   id?: string
+  agencyId: string
+  propertyOfInterest?: string | null
   name?: string | null
   contact?: string | null
   preferredVisitTime?: string | null
@@ -475,15 +663,19 @@ export type VoiceLeadCreateManyPropertyInput = {
 
 export type VoiceLeadUpdateWithoutPropertyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeadStatusFieldUpdateOperationsInput | $Enums.LeadStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  agency?: Prisma.AgencyUpdateOneRequiredWithoutVoiceLeadsNestedInput
 }
 
 export type VoiceLeadUncheckedUpdateWithoutPropertyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  agencyId?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -493,6 +685,8 @@ export type VoiceLeadUncheckedUpdateWithoutPropertyInput = {
 
 export type VoiceLeadUncheckedUpdateManyWithoutPropertyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  agencyId?: Prisma.StringFieldUpdateOperationsInput | string
+  propertyOfInterest?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   preferredVisitTime?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -504,40 +698,51 @@ export type VoiceLeadUncheckedUpdateManyWithoutPropertyInput = {
 
 export type VoiceLeadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  agencyId?: boolean
   propertyId?: boolean
+  propertyOfInterest?: boolean
   name?: boolean
   contact?: boolean
   preferredVisitTime?: boolean
   status?: boolean
   createdAt?: boolean
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  agency?: boolean | Prisma.AgencyDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.VoiceLead$propertyArgs<ExtArgs>
 }, ExtArgs["result"]["voiceLead"]>
 
 export type VoiceLeadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  agencyId?: boolean
   propertyId?: boolean
+  propertyOfInterest?: boolean
   name?: boolean
   contact?: boolean
   preferredVisitTime?: boolean
   status?: boolean
   createdAt?: boolean
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  agency?: boolean | Prisma.AgencyDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.VoiceLead$propertyArgs<ExtArgs>
 }, ExtArgs["result"]["voiceLead"]>
 
 export type VoiceLeadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  agencyId?: boolean
   propertyId?: boolean
+  propertyOfInterest?: boolean
   name?: boolean
   contact?: boolean
   preferredVisitTime?: boolean
   status?: boolean
   createdAt?: boolean
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  agency?: boolean | Prisma.AgencyDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.VoiceLead$propertyArgs<ExtArgs>
 }, ExtArgs["result"]["voiceLead"]>
 
 export type VoiceLeadSelectScalar = {
   id?: boolean
+  agencyId?: boolean
   propertyId?: boolean
+  propertyOfInterest?: boolean
   name?: boolean
   contact?: boolean
   preferredVisitTime?: boolean
@@ -545,25 +750,31 @@ export type VoiceLeadSelectScalar = {
   createdAt?: boolean
 }
 
-export type VoiceLeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "propertyId" | "name" | "contact" | "preferredVisitTime" | "status" | "createdAt", ExtArgs["result"]["voiceLead"]>
+export type VoiceLeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agencyId" | "propertyId" | "propertyOfInterest" | "name" | "contact" | "preferredVisitTime" | "status" | "createdAt", ExtArgs["result"]["voiceLead"]>
 export type VoiceLeadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  agency?: boolean | Prisma.AgencyDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.VoiceLead$propertyArgs<ExtArgs>
 }
 export type VoiceLeadIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  agency?: boolean | Prisma.AgencyDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.VoiceLead$propertyArgs<ExtArgs>
 }
 export type VoiceLeadIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  agency?: boolean | Prisma.AgencyDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.VoiceLead$propertyArgs<ExtArgs>
 }
 
 export type $VoiceLeadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "VoiceLead"
   objects: {
-    property: Prisma.$PropertyPayload<ExtArgs>
+    agency: Prisma.$AgencyPayload<ExtArgs>
+    property: Prisma.$PropertyPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    propertyId: string
+    agencyId: string
+    propertyId: string | null
+    propertyOfInterest: string | null
     name: string | null
     contact: string | null
     preferredVisitTime: string | null
@@ -963,7 +1174,8 @@ readonly fields: VoiceLeadFieldRefs;
  */
 export interface Prisma__VoiceLeadClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  property<T extends Prisma.PropertyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PropertyDefaultArgs<ExtArgs>>): Prisma.Prisma__PropertyClient<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  agency<T extends Prisma.AgencyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AgencyDefaultArgs<ExtArgs>>): Prisma.Prisma__AgencyClient<runtime.Types.Result.GetResult<Prisma.$AgencyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  property<T extends Prisma.VoiceLead$propertyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VoiceLead$propertyArgs<ExtArgs>>): Prisma.Prisma__PropertyClient<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -994,7 +1206,9 @@ export interface Prisma__VoiceLeadClient<T, Null = never, ExtArgs extends runtim
  */
 export interface VoiceLeadFieldRefs {
   readonly id: Prisma.FieldRef<"VoiceLead", 'String'>
+  readonly agencyId: Prisma.FieldRef<"VoiceLead", 'String'>
   readonly propertyId: Prisma.FieldRef<"VoiceLead", 'String'>
+  readonly propertyOfInterest: Prisma.FieldRef<"VoiceLead", 'String'>
   readonly name: Prisma.FieldRef<"VoiceLead", 'String'>
   readonly contact: Prisma.FieldRef<"VoiceLead", 'String'>
   readonly preferredVisitTime: Prisma.FieldRef<"VoiceLead", 'String'>
@@ -1398,6 +1612,25 @@ export type VoiceLeadDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many VoiceLeads to delete.
    */
   limit?: number
+}
+
+/**
+ * VoiceLead.property
+ */
+export type VoiceLead$propertyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Property
+   */
+  select?: Prisma.PropertySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Property
+   */
+  omit?: Prisma.PropertyOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PropertyInclude<ExtArgs> | null
+  where?: Prisma.PropertyWhereInput
 }
 
 /**

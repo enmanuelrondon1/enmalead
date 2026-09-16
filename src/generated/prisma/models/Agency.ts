@@ -192,6 +192,7 @@ export type AgencyWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Agency"> | Date | string
   users?: Prisma.UserListRelationFilter
   properties?: Prisma.PropertyListRelationFilter
+  voiceLeads?: Prisma.VoiceLeadListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
 }
 
@@ -204,6 +205,7 @@ export type AgencyOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
   properties?: Prisma.PropertyOrderByRelationAggregateInput
+  voiceLeads?: Prisma.VoiceLeadOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
 }
 
@@ -219,6 +221,7 @@ export type AgencyWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Agency"> | Date | string
   users?: Prisma.UserListRelationFilter
   properties?: Prisma.PropertyListRelationFilter
+  voiceLeads?: Prisma.VoiceLeadListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
 }, "id" | "slug">
 
@@ -255,6 +258,7 @@ export type AgencyCreateInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutAgencyInput
   properties?: Prisma.PropertyCreateNestedManyWithoutAgencyInput
+  voiceLeads?: Prisma.VoiceLeadCreateNestedManyWithoutAgencyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutAgencyInput
 }
 
@@ -267,6 +271,7 @@ export type AgencyUncheckedCreateInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutAgencyInput
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgencyInput
+  voiceLeads?: Prisma.VoiceLeadUncheckedCreateNestedManyWithoutAgencyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutAgencyInput
 }
 
@@ -279,6 +284,7 @@ export type AgencyUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutAgencyNestedInput
   properties?: Prisma.PropertyUpdateManyWithoutAgencyNestedInput
+  voiceLeads?: Prisma.VoiceLeadUpdateManyWithoutAgencyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutAgencyNestedInput
 }
 
@@ -291,6 +297,7 @@ export type AgencyUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutAgencyNestedInput
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgencyNestedInput
+  voiceLeads?: Prisma.VoiceLeadUncheckedUpdateManyWithoutAgencyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutAgencyNestedInput
 }
 
@@ -407,6 +414,20 @@ export type AgencyUpdateOneRequiredWithoutPropertiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AgencyUpdateToOneWithWhereWithoutPropertiesInput, Prisma.AgencyUpdateWithoutPropertiesInput>, Prisma.AgencyUncheckedUpdateWithoutPropertiesInput>
 }
 
+export type AgencyCreateNestedOneWithoutVoiceLeadsInput = {
+  create?: Prisma.XOR<Prisma.AgencyCreateWithoutVoiceLeadsInput, Prisma.AgencyUncheckedCreateWithoutVoiceLeadsInput>
+  connectOrCreate?: Prisma.AgencyCreateOrConnectWithoutVoiceLeadsInput
+  connect?: Prisma.AgencyWhereUniqueInput
+}
+
+export type AgencyUpdateOneRequiredWithoutVoiceLeadsNestedInput = {
+  create?: Prisma.XOR<Prisma.AgencyCreateWithoutVoiceLeadsInput, Prisma.AgencyUncheckedCreateWithoutVoiceLeadsInput>
+  connectOrCreate?: Prisma.AgencyCreateOrConnectWithoutVoiceLeadsInput
+  upsert?: Prisma.AgencyUpsertWithoutVoiceLeadsInput
+  connect?: Prisma.AgencyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AgencyUpdateToOneWithWhereWithoutVoiceLeadsInput, Prisma.AgencyUpdateWithoutVoiceLeadsInput>, Prisma.AgencyUncheckedUpdateWithoutVoiceLeadsInput>
+}
+
 export type AgencyCreateWithoutSubscriptionInput = {
   id?: string
   slug: string
@@ -416,6 +437,7 @@ export type AgencyCreateWithoutSubscriptionInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutAgencyInput
   properties?: Prisma.PropertyCreateNestedManyWithoutAgencyInput
+  voiceLeads?: Prisma.VoiceLeadCreateNestedManyWithoutAgencyInput
 }
 
 export type AgencyUncheckedCreateWithoutSubscriptionInput = {
@@ -427,6 +449,7 @@ export type AgencyUncheckedCreateWithoutSubscriptionInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutAgencyInput
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgencyInput
+  voiceLeads?: Prisma.VoiceLeadUncheckedCreateNestedManyWithoutAgencyInput
 }
 
 export type AgencyCreateOrConnectWithoutSubscriptionInput = {
@@ -454,6 +477,7 @@ export type AgencyUpdateWithoutSubscriptionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutAgencyNestedInput
   properties?: Prisma.PropertyUpdateManyWithoutAgencyNestedInput
+  voiceLeads?: Prisma.VoiceLeadUpdateManyWithoutAgencyNestedInput
 }
 
 export type AgencyUncheckedUpdateWithoutSubscriptionInput = {
@@ -465,6 +489,7 @@ export type AgencyUncheckedUpdateWithoutSubscriptionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutAgencyNestedInput
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgencyNestedInput
+  voiceLeads?: Prisma.VoiceLeadUncheckedUpdateManyWithoutAgencyNestedInput
 }
 
 export type AgencyCreateWithoutUsersInput = {
@@ -475,6 +500,7 @@ export type AgencyCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyCreateNestedManyWithoutAgencyInput
+  voiceLeads?: Prisma.VoiceLeadCreateNestedManyWithoutAgencyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutAgencyInput
 }
 
@@ -486,6 +512,7 @@ export type AgencyUncheckedCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgencyInput
+  voiceLeads?: Prisma.VoiceLeadUncheckedCreateNestedManyWithoutAgencyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutAgencyInput
 }
 
@@ -513,6 +540,7 @@ export type AgencyUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUpdateManyWithoutAgencyNestedInput
+  voiceLeads?: Prisma.VoiceLeadUpdateManyWithoutAgencyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutAgencyNestedInput
 }
 
@@ -524,6 +552,7 @@ export type AgencyUncheckedUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgencyNestedInput
+  voiceLeads?: Prisma.VoiceLeadUncheckedUpdateManyWithoutAgencyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutAgencyNestedInput
 }
 
@@ -535,6 +564,7 @@ export type AgencyCreateWithoutPropertiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutAgencyInput
+  voiceLeads?: Prisma.VoiceLeadCreateNestedManyWithoutAgencyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutAgencyInput
 }
 
@@ -546,6 +576,7 @@ export type AgencyUncheckedCreateWithoutPropertiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutAgencyInput
+  voiceLeads?: Prisma.VoiceLeadUncheckedCreateNestedManyWithoutAgencyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutAgencyInput
 }
 
@@ -573,6 +604,7 @@ export type AgencyUpdateWithoutPropertiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutAgencyNestedInput
+  voiceLeads?: Prisma.VoiceLeadUpdateManyWithoutAgencyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutAgencyNestedInput
 }
 
@@ -584,6 +616,71 @@ export type AgencyUncheckedUpdateWithoutPropertiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutAgencyNestedInput
+  voiceLeads?: Prisma.VoiceLeadUncheckedUpdateManyWithoutAgencyNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutAgencyNestedInput
+}
+
+export type AgencyCreateWithoutVoiceLeadsInput = {
+  id?: string
+  slug: string
+  name: string
+  assistantPrompt?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutAgencyInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutAgencyInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutAgencyInput
+}
+
+export type AgencyUncheckedCreateWithoutVoiceLeadsInput = {
+  id?: string
+  slug: string
+  name: string
+  assistantPrompt?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutAgencyInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgencyInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutAgencyInput
+}
+
+export type AgencyCreateOrConnectWithoutVoiceLeadsInput = {
+  where: Prisma.AgencyWhereUniqueInput
+  create: Prisma.XOR<Prisma.AgencyCreateWithoutVoiceLeadsInput, Prisma.AgencyUncheckedCreateWithoutVoiceLeadsInput>
+}
+
+export type AgencyUpsertWithoutVoiceLeadsInput = {
+  update: Prisma.XOR<Prisma.AgencyUpdateWithoutVoiceLeadsInput, Prisma.AgencyUncheckedUpdateWithoutVoiceLeadsInput>
+  create: Prisma.XOR<Prisma.AgencyCreateWithoutVoiceLeadsInput, Prisma.AgencyUncheckedCreateWithoutVoiceLeadsInput>
+  where?: Prisma.AgencyWhereInput
+}
+
+export type AgencyUpdateToOneWithWhereWithoutVoiceLeadsInput = {
+  where?: Prisma.AgencyWhereInput
+  data: Prisma.XOR<Prisma.AgencyUpdateWithoutVoiceLeadsInput, Prisma.AgencyUncheckedUpdateWithoutVoiceLeadsInput>
+}
+
+export type AgencyUpdateWithoutVoiceLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  assistantPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutAgencyNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutAgencyNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutAgencyNestedInput
+}
+
+export type AgencyUncheckedUpdateWithoutVoiceLeadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  assistantPrompt?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutAgencyNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgencyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutAgencyNestedInput
 }
 
@@ -595,11 +692,13 @@ export type AgencyUncheckedUpdateWithoutPropertiesInput = {
 export type AgencyCountOutputType = {
   users: number
   properties: number
+  voiceLeads: number
 }
 
 export type AgencyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | AgencyCountOutputTypeCountUsersArgs
   properties?: boolean | AgencyCountOutputTypeCountPropertiesArgs
+  voiceLeads?: boolean | AgencyCountOutputTypeCountVoiceLeadsArgs
 }
 
 /**
@@ -626,6 +725,13 @@ export type AgencyCountOutputTypeCountPropertiesArgs<ExtArgs extends runtime.Typ
   where?: Prisma.PropertyWhereInput
 }
 
+/**
+ * AgencyCountOutputType without action
+ */
+export type AgencyCountOutputTypeCountVoiceLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VoiceLeadWhereInput
+}
+
 
 export type AgencySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -636,6 +742,7 @@ export type AgencySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   updatedAt?: boolean
   users?: boolean | Prisma.Agency$usersArgs<ExtArgs>
   properties?: boolean | Prisma.Agency$propertiesArgs<ExtArgs>
+  voiceLeads?: boolean | Prisma.Agency$voiceLeadsArgs<ExtArgs>
   subscription?: boolean | Prisma.Agency$subscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.AgencyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["agency"]>
@@ -671,6 +778,7 @@ export type AgencyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type AgencyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Agency$usersArgs<ExtArgs>
   properties?: boolean | Prisma.Agency$propertiesArgs<ExtArgs>
+  voiceLeads?: boolean | Prisma.Agency$voiceLeadsArgs<ExtArgs>
   subscription?: boolean | Prisma.Agency$subscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.AgencyCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -682,6 +790,7 @@ export type $AgencyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     users: Prisma.$UserPayload<ExtArgs>[]
     properties: Prisma.$PropertyPayload<ExtArgs>[]
+    voiceLeads: Prisma.$VoiceLeadPayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1087,6 +1196,7 @@ export interface Prisma__AgencyClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   users<T extends Prisma.Agency$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Agency$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   properties<T extends Prisma.Agency$propertiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Agency$propertiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  voiceLeads<T extends Prisma.Agency$voiceLeadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Agency$voiceLeadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VoiceLeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.Agency$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Agency$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1561,6 +1671,30 @@ export type Agency$propertiesArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.PropertyScalarFieldEnum | Prisma.PropertyScalarFieldEnum[]
+}
+
+/**
+ * Agency.voiceLeads
+ */
+export type Agency$voiceLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VoiceLead
+   */
+  select?: Prisma.VoiceLeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the VoiceLead
+   */
+  omit?: Prisma.VoiceLeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VoiceLeadInclude<ExtArgs> | null
+  where?: Prisma.VoiceLeadWhereInput
+  orderBy?: Prisma.VoiceLeadOrderByWithRelationInput | Prisma.VoiceLeadOrderByWithRelationInput[]
+  cursor?: Prisma.VoiceLeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VoiceLeadScalarFieldEnum | Prisma.VoiceLeadScalarFieldEnum[]
 }
 
 /**

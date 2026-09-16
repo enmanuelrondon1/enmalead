@@ -530,9 +530,9 @@ export type PropertySumOrderByAggregateInput = {
   longitude?: Prisma.SortOrder
 }
 
-export type PropertyScalarRelationFilter = {
-  is?: Prisma.PropertyWhereInput
-  isNot?: Prisma.PropertyWhereInput
+export type PropertyNullableScalarRelationFilter = {
+  is?: Prisma.PropertyWhereInput | null
+  isNot?: Prisma.PropertyWhereInput | null
 }
 
 export type PropertyCreateNestedManyWithoutAgencyInput = {
@@ -617,10 +617,12 @@ export type PropertyCreateNestedOneWithoutVoiceLeadsInput = {
   connect?: Prisma.PropertyWhereUniqueInput
 }
 
-export type PropertyUpdateOneRequiredWithoutVoiceLeadsNestedInput = {
+export type PropertyUpdateOneWithoutVoiceLeadsNestedInput = {
   create?: Prisma.XOR<Prisma.PropertyCreateWithoutVoiceLeadsInput, Prisma.PropertyUncheckedCreateWithoutVoiceLeadsInput>
   connectOrCreate?: Prisma.PropertyCreateOrConnectWithoutVoiceLeadsInput
   upsert?: Prisma.PropertyUpsertWithoutVoiceLeadsInput
+  disconnect?: Prisma.PropertyWhereInput | boolean
+  delete?: Prisma.PropertyWhereInput | boolean
   connect?: Prisma.PropertyWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.PropertyUpdateToOneWithWhereWithoutVoiceLeadsInput, Prisma.PropertyUpdateWithoutVoiceLeadsInput>, Prisma.PropertyUncheckedUpdateWithoutVoiceLeadsInput>
 }
