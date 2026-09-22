@@ -7,15 +7,18 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const message = body.message;
 
+    console.log("[VAPI WEBHOOK] Tipo de evento:", message?.type);
+
     if (message?.type !== "end-of-call-report") {
       return NextResponse.json({ received: true });
     }
 
     const structuredData = message.artifact?.structuredOutputs;
 
+    console.log("[VAPI WEBHOOK] structuredData:", JSON.stringify(structuredData));
+
     if (!structuredData) {
-      console.warn("Webhook Vapi: no hay structuredOutputs");
-      return NextResponse.json({ received: true });
+      return NextResponse.json({ received: true, debug: "no structuredOutputs" });
     }
 
     const entry = Object.values(structuredData).find(
@@ -24,9 +27,15 @@ export async function POST(req: NextRequest) {
 
     const leadData = entry?.result;
 
+    console.log("[VAPI WEBHOOK] leadData:", JSON.stringify(leadData));
+
     if (!leadData?.agencyId) {
-      console.warn("Webhook Vapi: falta agencyId en leadData", leadData);
-      return NextResponse.json({ received: true });
+      return NextResponse.json({
+        received: true,
+        debug: "falta agencyId",
+        structuredDataKeys: Object.keys(structuredData),
+        leadData,
+      });
     }
 
     const agency = await prisma.agency.findUnique({
@@ -34,11 +43,14 @@ export async function POST(req: NextRequest) {
     });
 
     if (!agency) {
-      console.warn("Webhook Vapi: agencyId no coincide con ninguna agencia", leadData.agencyId);
-      return NextResponse.json({ received: true });
+      return NextResponse.json({
+        received: true,
+        debug: "agencyId no coincide",
+        agencyIdRecibido: leadData.agencyId,
+      });
     }
 
-    await prisma.voiceLead.create({
+    const created = await prisma.voiceLead.create({
       data: {
         agencyId: leadData.agencyId,
         name: leadData.name ?? null,
@@ -48,9 +60,11 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({ received: true });
+    console.log("[VAPI WEBHOOK] VoiceLead creado:", created.id);
+
+    return NextResponse.json({ received: true, debug: "creado con éxito", leadId: created.id });
   } catch (err) {
     console.error("Error en webhook de Vapi:", err);
-    return NextResponse.json({ error: "Error interno" }, { status: 500 });
+    return NextResponse.json({ error: "Error interno", debug: String(err) }, { status: 500 });
   }
 }
