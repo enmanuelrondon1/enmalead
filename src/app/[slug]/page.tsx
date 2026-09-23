@@ -4,6 +4,32 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { VoiceWidget } from "./voice-widget";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const agency = await prisma.agency.findUnique({
+    where: { slug },
+    select: { name: true, _count: { select: { properties: true } } },
+  });
+
+  if (!agency) return {};
+
+  const title = `${agency.name} — Propiedades en venta`;
+  const description = `Explora las ${agency._count.properties} propiedades de ${agency.name} y habla con su asistente de voz para agendar una visita.`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/${slug}` },
+    openGraph: { title, description, type: "website" },
+  };
+}
 
 export default async function AgencyPublicPage({
   params,

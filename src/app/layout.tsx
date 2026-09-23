@@ -9,15 +9,21 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-title: "EnmaLead — Asistente de voz IA para inmobiliarias",
-description: "Captura leads 24/7 con un asistente de voz IA para tu agencia inmobiliaria",
+  metadataBase: new URL(
+    (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(
+      /\/$/,
+      "",
+    ),
+  ),
+  title: "EnmaLead — Asistente de voz IA para inmobiliarias",
+  description:
+    "Captura leads 24/7 con un asistente de voz IA para tu agencia inmobiliaria",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

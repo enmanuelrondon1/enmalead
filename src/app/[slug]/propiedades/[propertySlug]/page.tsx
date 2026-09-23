@@ -4,6 +4,39 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { VoiceWidget } from "../../voice-widget";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string; propertySlug: string }>;
+}): Promise<Metadata> {
+  const { slug, propertySlug } = await params;
+
+  const property = await prisma.property.findFirst({
+    where: { slug: propertySlug, agency: { slug } },
+    include: { agency: { select: { name: true } } },
+  });
+
+  if (!property) return {};
+
+  const title = `${property.title} — ${property.agency.name}`;
+  const description =
+    property.description?.slice(0, 160) ??
+    `${property.title} en ${property.location}. Consulta detalles y agenda una visita con ${property.agency.name}.`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/${slug}/propiedades/${propertySlug}` },
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      images: property.images[0] ? [{ url: property.images[0] }] : [],
+    },
+  };
+}
 
 export default async function PropertyDetailPage({
   params,
