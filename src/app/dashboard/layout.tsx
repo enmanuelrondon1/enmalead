@@ -2,6 +2,7 @@
 import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
 export default async function DashboardLayout({
   children,
@@ -14,11 +15,18 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
+  const agency = await prisma.agency.findUnique({
+    where: { id: session.user.agencyId },
+    select: { slug: true },
+  });
+
   return (
     <div className="min-h-screen flex bg-gray-50">
       <aside className="w-60 bg-ocean-950 text-white flex flex-col">
         <div className="px-5 py-6 border-b border-white/10">
-          <span className="text-lg font-bold">EnmaLead</span>
+          <Link href="/" className="text-lg font-bold hover:text-accent transition">
+            EnmaLead
+          </Link>
         </div>
 
         <nav className="flex-1 px-3 py-4 space-y-1">
@@ -40,6 +48,17 @@ export default async function DashboardLayout({
           >
             Configuración
           </Link>
+
+          {agency && (
+            <a
+              href={`/${agency.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-accent hover:bg-white/10 transition mt-4 border-t border-white/10 pt-4"
+            >
+              Ver sitio público ↗
+            </a>
+          )}
         </nav>
 
         <div className="px-3 py-4 border-t border-white/10">

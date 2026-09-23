@@ -55,7 +55,8 @@ export const ModelName = {
   Subscription: 'Subscription',
   User: 'User',
   Property: 'Property',
-  VoiceLead: 'VoiceLead'
+  VoiceLead: 'VoiceLead',
+  PasswordResetToken: 'PasswordResetToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -144,6 +145,17 @@ export const VoiceLeadScalarFieldEnum = {
 } as const
 
 export type VoiceLeadScalarFieldEnum = (typeof VoiceLeadScalarFieldEnum)[keyof typeof VoiceLeadScalarFieldEnum]
+
+
+export const PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PasswordResetTokenScalarFieldEnum = (typeof PasswordResetTokenScalarFieldEnum)[keyof typeof PasswordResetTokenScalarFieldEnum]
 
 
 export const SortOrder = {

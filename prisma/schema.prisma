@@ -51,14 +51,15 @@ model Subscription {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  agencyId  String
-  agency    Agency   @relation(fields: [agencyId], references: [id])
-  name      String?
-  email     String   @unique
-  password  String?
-  role      Role     @default(MEMBER)
-  createdAt DateTime @default(now())
+  id                  String                @id @default(cuid())
+  agencyId            String
+  agency              Agency                @relation(fields: [agencyId], references: [id])
+  name                String?
+  email               String                @unique
+  password            String?
+  role                Role                  @default(MEMBER)
+  passwordResetTokens PasswordResetToken[]
+  createdAt           DateTime              @default(now())
 }
 
 model Property {
@@ -90,4 +91,13 @@ model VoiceLead {
   preferredVisitTime String?
   status             LeadStatus @default(NEW)
   createdAt          DateTime   @default(now())
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
 }

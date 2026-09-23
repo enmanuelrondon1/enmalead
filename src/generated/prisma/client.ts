@@ -66,3 +66,8 @@ export type Property = Prisma.PropertyModel
  * 
  */
 export type VoiceLead = Prisma.VoiceLeadModel
+/**
+ * Model PasswordResetToken
+ * 
+ */
+export type PasswordResetToken = Prisma.PasswordResetTokenModel

@@ -40,7 +40,9 @@ export default function LoginPage() {
       >
         <div>
           <h1 className="text-2xl font-bold text-ocean-950">Inicia sesión</h1>
-          <p className="text-sm text-gray-500 mt-1">Accede al dashboard de tu agencia</p>
+          <p className="text-sm text-gray-500 mt-1">
+            Accede al dashboard de tu agencia
+          </p>
         </div>
 
         {error && (
@@ -50,7 +52,9 @@ export default function LoginPage() {
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Email
+          </label>
           <input
             type="email"
             value={email}
@@ -61,7 +65,9 @@ export default function LoginPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Contraseña
+          </label>
           <input
             type="password"
             value={password}
@@ -80,8 +86,17 @@ export default function LoginPage() {
         </button>
 
         <p className="text-center text-sm text-gray-500">
+          <a href="/forgot-password" className="text-ocean-800 hover:underline">
+            ¿Olvidaste tu contraseña?
+          </a>
+        </p>
+
+        <p className="text-center text-sm text-gray-500">
           ¿No tienes cuenta?{" "}
-          <a href="/register" className="text-ocean-800 font-medium hover:underline">
+          <a
+            href="/register"
+            className="text-ocean-800 font-medium hover:underline"
+          >
             Regístrate
           </a>
         </p>

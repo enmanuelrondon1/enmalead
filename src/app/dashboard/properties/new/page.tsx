@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ImageUploader } from "@/components/image-uploader";
 
 export default function NewPropertyPage() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function NewPropertyPage() {
   const [location, setLocation] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +24,7 @@ export default function NewPropertyPage() {
       const res = await fetch("/api/properties", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, price, location }),
+        body: JSON.stringify({ title, description, price, location, images }),
       });
 
       const data = await res.json();
@@ -43,9 +45,14 @@ export default function NewPropertyPage() {
 
   return (
     <div className="max-w-xl">
-      <h1 className="text-2xl font-bold text-ocean-950 mb-6">Nueva propiedad</h1>
+      <h1 className="text-2xl font-bold text-ocean-950 mb-6">
+        Nueva propiedad
+      </h1>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-xl border border-gray-200 p-6 space-y-4"
+      >
         {error && (
           <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
             {error}
@@ -53,7 +60,9 @@ export default function NewPropertyPage() {
         )}
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Título</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Título
+          </label>
           <input
             type="text"
             value={title}
@@ -65,7 +74,9 @@ export default function NewPropertyPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Descripción
+          </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -75,7 +86,9 @@ export default function NewPropertyPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Precio</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Precio
+          </label>
           <input
             type="number"
             value={price}
@@ -87,7 +100,9 @@ export default function NewPropertyPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Ubicación</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Ubicación
+          </label>
           <input
             type="text"
             value={location}
@@ -97,6 +112,7 @@ export default function NewPropertyPage() {
           />
         </div>
 
+        <ImageUploader images={images} onChange={setImages} />
         <button
           type="submit"
           disabled={submitting}
