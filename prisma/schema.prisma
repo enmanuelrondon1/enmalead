@@ -66,6 +66,7 @@ model Property {
   id          String      @id @default(cuid())
   agencyId    String
   agency      Agency      @relation(fields: [agencyId], references: [id])
+  slug        String
   title       String
   description String?
   price       Float
@@ -77,6 +78,8 @@ model Property {
   voiceLeads  VoiceLead[]
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
+
+  @@unique([agencyId, slug])
 }
 
 model VoiceLead {

@@ -1,9 +1,45 @@
-// src/app/api/webhooks/vapi/route.ts
+// cat src/app/api/webhooks/vapi/route.ts
 import { NextRequest, NextResponse } from "next/server";
+import { timingSafeEqual } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { sendEmail } from "@/lib/mailer";
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function clean(value: unknown, max = 200): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim().slice(0, max);
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+function isAuthorized(req: NextRequest): boolean {
+  const secret = process.env.VAPI_WEBHOOK_SECRET;
+  if (!secret) {
+    console.error("Webhook Vapi: VAPI_WEBHOOK_SECRET no está configurado");
+    return false;
+  }
+
+  const bearer = req.headers.get("authorization")?.replace(/^Bearer\s+/i, "");
+  const provided = req.headers.get("x-vapi-secret") ?? bearer;
+  if (!provided) return false;
+
+  const a = Buffer.from(provided);
+  const b = Buffer.from(secret);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
 export async function POST(req: NextRequest) {
+  if (!isAuthorized(req)) {
+    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  }
+
   try {
     const body = await req.json();
     const message = body.message;
@@ -46,19 +82,26 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true });
     }
 
+    const name = clean(leadData.name);
+    const contact = clean(leadData.contact);
+    const propertyOfInterest = clean(leadData.propertyOfInterest);
+    const preferredVisitTime = clean(leadData.preferredVisitTime);
+
     await prisma.voiceLead.create({
       data: {
-        agencyId: leadData.agencyId,
-        name: leadData.name ?? null,
-        contact: leadData.contact ?? null,
-        propertyOfInterest: leadData.propertyOfInterest ?? null,
-        preferredVisitTime: leadData.preferredVisitTime ?? null,
+        agencyId: agency.id,
+        name,
+        contact,
+        propertyOfInterest,
+        preferredVisitTime,
       },
     });
 
     const adminEmail = agency.users[0]?.email;
 
     if (adminEmail) {
+      const show = (v: string | null) => (v ? escapeHtml(v) : "No especificado");
+
       try {
         await sendEmail({
           to: adminEmail,
@@ -66,10 +109,10 @@ export async function POST(req: NextRequest) {
           html: `
             <p>Tu asistente de voz acaba de capturar un nuevo lead.</p>
             <ul>
-              <li><strong>Nombre:</strong> ${leadData.name ?? "No especificado"}</li>
-              <li><strong>Contacto:</strong> ${leadData.contact ?? "No especificado"}</li>
-              <li><strong>Propiedad de interés:</strong> ${leadData.propertyOfInterest ?? "No especificado"}</li>
-              <li><strong>Horario preferido:</strong> ${leadData.preferredVisitTime ?? "No especificado"}</li>
+              <li><strong>Nombre:</strong> ${show(name)}</li>
+              <li><strong>Contacto:</strong> ${show(contact)}</li>
+              <li><strong>Propiedad de interés:</strong> ${show(propertyOfInterest)}</li>
+              <li><strong>Horario preferido:</strong> ${show(preferredVisitTime)}</li>
             </ul>
             <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard/leads">Ver todos tus leads</a></p>
           `,

@@ -41,6 +41,7 @@ export type PropertySumAggregateOutputType = {
 export type PropertyMinAggregateOutputType = {
   id: string | null
   agencyId: string | null
+  slug: string | null
   title: string | null
   description: string | null
   price: number | null
@@ -54,6 +55,7 @@ export type PropertyMinAggregateOutputType = {
 export type PropertyMaxAggregateOutputType = {
   id: string | null
   agencyId: string | null
+  slug: string | null
   title: string | null
   description: string | null
   price: number | null
@@ -67,6 +69,7 @@ export type PropertyMaxAggregateOutputType = {
 export type PropertyCountAggregateOutputType = {
   id: number
   agencyId: number
+  slug: number
   title: number
   description: number
   price: number
@@ -96,6 +99,7 @@ export type PropertySumAggregateInputType = {
 export type PropertyMinAggregateInputType = {
   id?: true
   agencyId?: true
+  slug?: true
   title?: true
   description?: true
   price?: true
@@ -109,6 +113,7 @@ export type PropertyMinAggregateInputType = {
 export type PropertyMaxAggregateInputType = {
   id?: true
   agencyId?: true
+  slug?: true
   title?: true
   description?: true
   price?: true
@@ -122,6 +127,7 @@ export type PropertyMaxAggregateInputType = {
 export type PropertyCountAggregateInputType = {
   id?: true
   agencyId?: true
+  slug?: true
   title?: true
   description?: true
   price?: true
@@ -224,6 +230,7 @@ export type PropertyGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type PropertyGroupByOutputType = {
   id: string
   agencyId: string
+  slug: string
   title: string
   description: string | null
   price: number
@@ -262,6 +269,7 @@ export type PropertyWhereInput = {
   NOT?: Prisma.PropertyWhereInput | Prisma.PropertyWhereInput[]
   id?: Prisma.StringFilter<"Property"> | string
   agencyId?: Prisma.StringFilter<"Property"> | string
+  slug?: Prisma.StringFilter<"Property"> | string
   title?: Prisma.StringFilter<"Property"> | string
   description?: Prisma.StringNullableFilter<"Property"> | string | null
   price?: Prisma.FloatFilter<"Property"> | number
@@ -279,6 +287,7 @@ export type PropertyWhereInput = {
 export type PropertyOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   agencyId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -295,10 +304,12 @@ export type PropertyOrderByWithRelationInput = {
 
 export type PropertyWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  agencyId_slug?: Prisma.PropertyAgencyIdSlugCompoundUniqueInput
   AND?: Prisma.PropertyWhereInput | Prisma.PropertyWhereInput[]
   OR?: Prisma.PropertyWhereInput[]
   NOT?: Prisma.PropertyWhereInput | Prisma.PropertyWhereInput[]
   agencyId?: Prisma.StringFilter<"Property"> | string
+  slug?: Prisma.StringFilter<"Property"> | string
   title?: Prisma.StringFilter<"Property"> | string
   description?: Prisma.StringNullableFilter<"Property"> | string | null
   price?: Prisma.FloatFilter<"Property"> | number
@@ -311,11 +322,12 @@ export type PropertyWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   agency?: Prisma.XOR<Prisma.AgencyScalarRelationFilter, Prisma.AgencyWhereInput>
   voiceLeads?: Prisma.VoiceLeadListRelationFilter
-}, "id">
+}, "id" | "agencyId_slug">
 
 export type PropertyOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   agencyId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -339,6 +351,7 @@ export type PropertyScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PropertyScalarWhereWithAggregatesInput | Prisma.PropertyScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Property"> | string
   agencyId?: Prisma.StringWithAggregatesFilter<"Property"> | string
+  slug?: Prisma.StringWithAggregatesFilter<"Property"> | string
   title?: Prisma.StringWithAggregatesFilter<"Property"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
   price?: Prisma.FloatWithAggregatesFilter<"Property"> | number
@@ -353,6 +366,7 @@ export type PropertyScalarWhereWithAggregatesInput = {
 
 export type PropertyCreateInput = {
   id?: string
+  slug: string
   title: string
   description?: string | null
   price: number
@@ -370,6 +384,7 @@ export type PropertyCreateInput = {
 export type PropertyUncheckedCreateInput = {
   id?: string
   agencyId: string
+  slug: string
   title: string
   description?: string | null
   price: number
@@ -385,6 +400,7 @@ export type PropertyUncheckedCreateInput = {
 
 export type PropertyUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -402,6 +418,7 @@ export type PropertyUpdateInput = {
 export type PropertyUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   agencyId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -418,6 +435,7 @@ export type PropertyUncheckedUpdateInput = {
 export type PropertyCreateManyInput = {
   id?: string
   agencyId: string
+  slug: string
   title: string
   description?: string | null
   price: number
@@ -432,6 +450,7 @@ export type PropertyCreateManyInput = {
 
 export type PropertyUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -447,6 +466,7 @@ export type PropertyUpdateManyMutationInput = {
 export type PropertyUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   agencyId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -477,9 +497,15 @@ export type StringNullableListFilter<$PrismaModel = never> = {
   isEmpty?: boolean
 }
 
+export type PropertyAgencyIdSlugCompoundUniqueInput = {
+  agencyId: string
+  slug: string
+}
+
 export type PropertyCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   agencyId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -501,6 +527,7 @@ export type PropertyAvgOrderByAggregateInput = {
 export type PropertyMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   agencyId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -514,6 +541,7 @@ export type PropertyMaxOrderByAggregateInput = {
 export type PropertyMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   agencyId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
@@ -629,6 +657,7 @@ export type PropertyUpdateOneWithoutVoiceLeadsNestedInput = {
 
 export type PropertyCreateWithoutAgencyInput = {
   id?: string
+  slug: string
   title: string
   description?: string | null
   price: number
@@ -644,6 +673,7 @@ export type PropertyCreateWithoutAgencyInput = {
 
 export type PropertyUncheckedCreateWithoutAgencyInput = {
   id?: string
+  slug: string
   title: string
   description?: string | null
   price: number
@@ -689,6 +719,7 @@ export type PropertyScalarWhereInput = {
   NOT?: Prisma.PropertyScalarWhereInput | Prisma.PropertyScalarWhereInput[]
   id?: Prisma.StringFilter<"Property"> | string
   agencyId?: Prisma.StringFilter<"Property"> | string
+  slug?: Prisma.StringFilter<"Property"> | string
   title?: Prisma.StringFilter<"Property"> | string
   description?: Prisma.StringNullableFilter<"Property"> | string | null
   price?: Prisma.FloatFilter<"Property"> | number
@@ -703,6 +734,7 @@ export type PropertyScalarWhereInput = {
 
 export type PropertyCreateWithoutVoiceLeadsInput = {
   id?: string
+  slug: string
   title: string
   description?: string | null
   price: number
@@ -719,6 +751,7 @@ export type PropertyCreateWithoutVoiceLeadsInput = {
 export type PropertyUncheckedCreateWithoutVoiceLeadsInput = {
   id?: string
   agencyId: string
+  slug: string
   title: string
   description?: string | null
   price: number
@@ -749,6 +782,7 @@ export type PropertyUpdateToOneWithWhereWithoutVoiceLeadsInput = {
 
 export type PropertyUpdateWithoutVoiceLeadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -765,6 +799,7 @@ export type PropertyUpdateWithoutVoiceLeadsInput = {
 export type PropertyUncheckedUpdateWithoutVoiceLeadsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   agencyId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -779,6 +814,7 @@ export type PropertyUncheckedUpdateWithoutVoiceLeadsInput = {
 
 export type PropertyCreateManyAgencyInput = {
   id?: string
+  slug: string
   title: string
   description?: string | null
   price: number
@@ -793,6 +829,7 @@ export type PropertyCreateManyAgencyInput = {
 
 export type PropertyUpdateWithoutAgencyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -808,6 +845,7 @@ export type PropertyUpdateWithoutAgencyInput = {
 
 export type PropertyUncheckedUpdateWithoutAgencyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -823,6 +861,7 @@ export type PropertyUncheckedUpdateWithoutAgencyInput = {
 
 export type PropertyUncheckedUpdateManyWithoutAgencyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.FloatFieldUpdateOperationsInput | number
@@ -869,6 +908,7 @@ export type PropertyCountOutputTypeCountVoiceLeadsArgs<ExtArgs extends runtime.T
 export type PropertySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   agencyId?: boolean
+  slug?: boolean
   title?: boolean
   description?: boolean
   price?: boolean
@@ -887,6 +927,7 @@ export type PropertySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type PropertySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   agencyId?: boolean
+  slug?: boolean
   title?: boolean
   description?: boolean
   price?: boolean
@@ -903,6 +944,7 @@ export type PropertySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type PropertySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   agencyId?: boolean
+  slug?: boolean
   title?: boolean
   description?: boolean
   price?: boolean
@@ -919,6 +961,7 @@ export type PropertySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type PropertySelectScalar = {
   id?: boolean
   agencyId?: boolean
+  slug?: boolean
   title?: boolean
   description?: boolean
   price?: boolean
@@ -931,7 +974,7 @@ export type PropertySelectScalar = {
   updatedAt?: boolean
 }
 
-export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agencyId" | "title" | "description" | "price" | "location" | "latitude" | "longitude" | "amenities" | "images" | "createdAt" | "updatedAt", ExtArgs["result"]["property"]>
+export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agencyId" | "slug" | "title" | "description" | "price" | "location" | "latitude" | "longitude" | "amenities" | "images" | "createdAt" | "updatedAt", ExtArgs["result"]["property"]>
 export type PropertyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   agency?: boolean | Prisma.AgencyDefaultArgs<ExtArgs>
   voiceLeads?: boolean | Prisma.Property$voiceLeadsArgs<ExtArgs>
@@ -953,6 +996,7 @@ export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     agencyId: string
+    slug: string
     title: string
     description: string | null
     price: number
@@ -1390,6 +1434,7 @@ export interface Prisma__PropertyClient<T, Null = never, ExtArgs extends runtime
 export interface PropertyFieldRefs {
   readonly id: Prisma.FieldRef<"Property", 'String'>
   readonly agencyId: Prisma.FieldRef<"Property", 'String'>
+  readonly slug: Prisma.FieldRef<"Property", 'String'>
   readonly title: Prisma.FieldRef<"Property", 'String'>
   readonly description: Prisma.FieldRef<"Property", 'String'>
   readonly price: Prisma.FieldRef<"Property", 'Float'>

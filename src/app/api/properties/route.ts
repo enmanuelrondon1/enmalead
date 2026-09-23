@@ -2,6 +2,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { slugify } from "@/lib/slugify";
+
+async function generateUniqueSlug(agencyId: string, title: string) {
+  const base = slugify(title);
+  let slug = base;
+  let counter = 2;
+
+  while (
+    await prisma.property.findUnique({
+      where: { agencyId_slug: { agencyId, slug } },
+    })
+  ) {
+    slug = `${base}-${counter}`;
+    counter++;
+  }
+
+  return slug;
+}
 
 export async function GET() {
   const session = await auth();
@@ -34,9 +52,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const slug = await generateUniqueSlug(session.user.agencyId, title);
+
     const property = await prisma.property.create({
       data: {
         agencyId: session.user.agencyId,
+        slug,
         title,
         description: description ?? null,
         price: Number(price),

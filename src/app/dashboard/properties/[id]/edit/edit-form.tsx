@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ImageUploader } from "@/components/image-uploader";
+import { AmenitiesInput } from "@/components/amenities-input";
 
 type Property = {
   id: string;
@@ -23,6 +24,7 @@ export function EditPropertyForm({ property }: { property: Property }) {
   const [images, setImages] = useState<string[]>(property.images ?? []);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [amenities, setAmenities] = useState<string[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +35,7 @@ export function EditPropertyForm({ property }: { property: Property }) {
       const res = await fetch(`/api/properties/${property.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, price, location, images }),
+        body: JSON.stringify({ title, description, price, location, amenities, images }),
       });
 
       const data = await res.json();

@@ -1,4 +1,4 @@
-// src/app/page.tsx
+// cat src/app/page.tsx
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
@@ -78,7 +78,7 @@ export default async function HomePage() {
             {properties.map((property) => (
               <Link
                 key={property.id}
-                href={`/${property.agency.slug}`}
+                href={`/${property.agency.slug}/propiedades/${property.slug}`}
                 className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition"
               >
                 <div className="h-40 bg-ocean-100 flex items-center justify-center text-ocean-400 text-sm">

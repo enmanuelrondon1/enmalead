@@ -2,6 +2,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { VoiceWidget } from "./voice-widget";
 
 export default async function AgencyPublicPage({
@@ -45,9 +46,10 @@ export default async function AgencyPublicPage({
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {agency.properties.map((property) => (
-              <div
+              <Link
                 key={property.id}
-                className="bg-white rounded-xl border border-gray-200 overflow-hidden"
+                href={`/${slug}/propiedades/${property.slug}`}
+                className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition"
               >
                 <div className="h-40 bg-ocean-100 flex items-center justify-center text-ocean-400 text-sm">
                   {property.images[0] ? (
@@ -71,7 +73,7 @@ export default async function AgencyPublicPage({
                     ${property.price.toLocaleString()}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
