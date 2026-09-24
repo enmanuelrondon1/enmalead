@@ -1,15 +1,22 @@
-// cat src/app/api/register/route.ts
+// src/app/api/register/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { slugify } from "@/lib/slugify";
-
-const RESERVED_SLUGS = [
-   "login", "register", "dashboard", "api", "admin",
-   "app", "www", "settings", "auth", "public",
- ];
+import { RESERVED_SLUGS } from "@/lib/reserved-slugs";
+import { getClientIp, rateLimit, tooManyRequests } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
+  const limit = await rateLimit({
+    key: `register:ip:${getClientIp(req)}`,
+    limit: 5,
+    windowSeconds: 60 * 60,
+  });
+
+  if (!limit.ok) {
+    return tooManyRequests(limit.retryAfter);
+  }
+
   try {
     const body = await req.json();
     const { agencyName, slug: rawSlug, name, email, password } = body;
@@ -32,8 +39,8 @@ export async function POST(req: NextRequest) {
     }
 
     if (RESERVED_SLUGS.includes(slug)) {
-       return NextResponse.json({ error: "Ese slug no está disponible" }, { status: 409 });
-     }
+      return NextResponse.json({ error: "Ese slug no está disponible" }, { status: 409 });
+    }
 
     const existingSlug = await prisma.agency.findUnique({ where: { slug } });
     if (existingSlug) {

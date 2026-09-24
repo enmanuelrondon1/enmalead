@@ -47,3 +47,8 @@ export type VoiceLead = Prisma.VoiceLeadModel
  * 
  */
 export type PasswordResetToken = Prisma.PasswordResetTokenModel
+/**
+ * Model RateLimit
+ * 
+ */
+export type RateLimit = Prisma.RateLimitModel
