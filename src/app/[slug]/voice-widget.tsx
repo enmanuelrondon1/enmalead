@@ -3,7 +3,10 @@
 
 import { useState, useEffect } from "react";
 import { getVapiClient } from "@/lib/vapi-client";
-import { buildAssistantOverrides } from "@/lib/build-assistant-overrides";
+import {
+  buildAssistantOverrides,
+  type CurrentProperty,
+} from "@/lib/build-assistant-overrides";
 
 type Property = {
   title: string;
@@ -16,6 +19,7 @@ type VoiceWidgetProps = {
   agencyName: string;
   assistantTone: string | null;
   properties: Property[];
+  currentProperty?: CurrentProperty | null;
 };
 
 export function VoiceWidget({
@@ -23,6 +27,7 @@ export function VoiceWidget({
   agencyName,
   assistantTone,
   properties,
+  currentProperty = null,
 }: VoiceWidgetProps) {
   const [status, setStatus] = useState<"idle" | "connecting" | "active">("idle");
 
@@ -56,6 +61,7 @@ export function VoiceWidget({
       assistantTone,
       properties,
       agencyId,
+      currentProperty,
     });
 
     await vapi.start(process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID!, overrides);
@@ -70,7 +76,10 @@ export function VoiceWidget({
           : "bg-accent hover:bg-accent-dim"
       }`}
     >
-      {status === "idle" && "🎙️ Habla con nuestro asistente"}
+      {status === "idle" &&
+        (currentProperty
+          ? "🎙️ Pregunta por esta propiedad"
+          : "🎙️ Habla con nuestro asistente")}
       {status === "connecting" && "Conectando..."}
       {status === "active" && "🔴 Terminar llamada"}
     </button>

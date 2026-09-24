@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     }
 
     const entry = Object.values(structuredData).find(
-      (item: any) => item?.name === "interes_visitante_enmalead"
+      (item: any) => item?.name === "interes_visitante_enmalead",
     ) as { result?: Record<string, string> } | undefined;
 
     const leadData = entry?.result;
@@ -78,7 +78,10 @@ export async function POST(req: NextRequest) {
     });
 
     if (!agency) {
-      console.warn("Webhook Vapi: agencyId no coincide con ninguna agencia", leadData.agencyId);
+      console.warn(
+        "Webhook Vapi: agencyId no coincide con ninguna agencia",
+        leadData.agencyId,
+      );
       return NextResponse.json({ received: true });
     }
 
@@ -87,20 +90,40 @@ export async function POST(req: NextRequest) {
     const propertyOfInterest = clean(leadData.propertyOfInterest);
     const preferredVisitTime = clean(leadData.preferredVisitTime);
 
+    const rawPropertyId =
+      clean(leadData.propertyId, 60) ??
+      clean(
+        message.call?.assistantOverrides?.variableValues?.currentPropertyId,
+        60,
+      );
+
+    let propertyId: string | null = null;
+    let linkedTitle: string | null = null;
+
+    if (rawPropertyId) {
+      const linked = await prisma.property.findFirst({
+        where: { id: rawPropertyId, agencyId: agency.id },
+        select: { id: true, title: true },
+      });
+      propertyId = linked?.id ?? null;
+      linkedTitle = linked?.title ?? null;
+    }
+
     await prisma.voiceLead.create({
       data: {
         agencyId: agency.id,
+        propertyId,
         name,
         contact,
-        propertyOfInterest,
+        propertyOfInterest: propertyOfInterest ?? linkedTitle,
         preferredVisitTime,
       },
     });
-
     const adminEmail = agency.users[0]?.email;
 
     if (adminEmail) {
-      const show = (v: string | null) => (v ? escapeHtml(v) : "No especificado");
+      const show = (v: string | null) =>
+        v ? escapeHtml(v) : "No especificado";
 
       try {
         await sendEmail({

@@ -64,7 +64,10 @@ export default async function PropertyDetailPage({
     <div className="min-h-screen bg-gray-50">
       <header className="bg-ocean-950 text-white">
         <div className="max-w-4xl mx-auto px-4 py-6">
-          <Link href={`/${slug}`} className="text-white/70 hover:text-white text-sm">
+          <Link
+            href={`/${slug}`}
+            className="text-white/70 hover:text-white text-sm"
+          >
             ← Volver a {agency.name}
           </Link>
         </div>
@@ -101,20 +104,28 @@ export default async function PropertyDetailPage({
         )}
 
         <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <p className="text-sm text-ocean-600 font-medium mb-1">{agency.name}</p>
-          <h1 className="text-2xl font-bold text-ocean-950">{property.title}</h1>
+          <p className="text-sm text-ocean-600 font-medium mb-1">
+            {agency.name}
+          </p>
+          <h1 className="text-2xl font-bold text-ocean-950">
+            {property.title}
+          </h1>
           <p className="text-gray-500 mt-1">{property.location}</p>
           <p className="text-2xl font-bold text-ocean-800 mt-3">
             ${property.price.toLocaleString()}
           </p>
 
           {property.description && (
-            <p className="text-gray-700 mt-4 leading-relaxed">{property.description}</p>
+            <p className="text-gray-700 mt-4 leading-relaxed">
+              {property.description}
+            </p>
           )}
 
           {property.amenities.length > 0 && (
             <div className="mt-5 pt-5 border-t border-gray-100">
-              <h2 className="text-sm font-semibold text-ocean-950 mb-2">Amenidades</h2>
+              <h2 className="text-sm font-semibold text-ocean-950 mb-2">
+                Amenidades
+              </h2>
               <div className="flex flex-wrap gap-2">
                 {property.amenities.map((amenity) => (
                   <span
@@ -139,6 +150,14 @@ export default async function PropertyDetailPage({
           price: p.price,
           location: p.location,
         }))}
+        currentProperty={{
+          id: property.id,
+          title: property.title,
+          price: property.price,
+          location: property.location,
+          description: property.description,
+          amenities: property.amenities,
+        }}
       />
     </div>
   );
