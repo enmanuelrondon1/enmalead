@@ -1,8 +1,22 @@
-// cat src/app/api/webhooks/vapi/route.ts
-import { NextRequest, NextResponse } from "next/server";
+// src/app/api/webhooks/vapi/route.ts
+import { NextRequest, NextResponse, after } from "next/server";
 import { timingSafeEqual } from "crypto";
 import { prisma } from "@/lib/prisma";
 import { sendEmail } from "@/lib/mailer";
+
+const EMPTY_VALUES = new Set([
+  "null",
+  "undefined",
+  "none",
+  "n/a",
+  "na",
+  "-",
+  "—",
+  "no proporcionado",
+  "no especificado",
+  "no disponible",
+  "desconocido",
+]);
 
 function escapeHtml(value: string): string {
   return value
@@ -16,7 +30,8 @@ function escapeHtml(value: string): string {
 function clean(value: unknown, max = 200): string | null {
   if (typeof value !== "string") return null;
   const trimmed = value.trim().slice(0, max);
-  return trimmed.length > 0 ? trimmed : null;
+  if (!trimmed || EMPTY_VALUES.has(trimmed.toLowerCase())) return null;
+  return trimmed;
 }
 
 function isAuthorized(req: NextRequest): boolean {
@@ -56,13 +71,23 @@ export async function POST(req: NextRequest) {
     }
 
     const entry = Object.values(structuredData).find(
-      (item: any) => item?.name === "interes_visitante_enmalead",
+      (item: any) => item?.name === "interes_visitante_enmalead"
     ) as { result?: Record<string, string> } | undefined;
 
     const leadData = entry?.result;
 
     if (!leadData?.agencyId) {
       console.warn("Webhook Vapi: falta agencyId en leadData", leadData);
+      return NextResponse.json({ received: true });
+    }
+
+    const name = clean(leadData.name);
+    const contact = clean(leadData.contact);
+
+    if (!name && !contact) {
+      console.warn("Webhook Vapi: lead descartado, sin nombre ni contacto", {
+        agencyId: leadData.agencyId,
+      });
       return NextResponse.json({ received: true });
     }
 
@@ -78,24 +103,16 @@ export async function POST(req: NextRequest) {
     });
 
     if (!agency) {
-      console.warn(
-        "Webhook Vapi: agencyId no coincide con ninguna agencia",
-        leadData.agencyId,
-      );
+      console.warn("Webhook Vapi: agencyId no coincide con ninguna agencia", leadData.agencyId);
       return NextResponse.json({ received: true });
     }
 
-    const name = clean(leadData.name);
-    const contact = clean(leadData.contact);
     const propertyOfInterest = clean(leadData.propertyOfInterest);
     const preferredVisitTime = clean(leadData.preferredVisitTime);
 
     const rawPropertyId =
       clean(leadData.propertyId, 60) ??
-      clean(
-        message.call?.assistantOverrides?.variableValues?.currentPropertyId,
-        60,
-      );
+      clean(message.call?.assistantOverrides?.variableValues?.currentPropertyId, 60);
 
     let propertyId: string | null = null;
     let linkedTitle: string | null = null;
@@ -109,40 +126,45 @@ export async function POST(req: NextRequest) {
       linkedTitle = linked?.title ?? null;
     }
 
+    const finalPropertyOfInterest = propertyOfInterest ?? linkedTitle;
+
     await prisma.voiceLead.create({
       data: {
         agencyId: agency.id,
         propertyId,
         name,
         contact,
-        propertyOfInterest: propertyOfInterest ?? linkedTitle,
+        propertyOfInterest: finalPropertyOfInterest,
         preferredVisitTime,
       },
     });
+
     const adminEmail = agency.users[0]?.email;
 
     if (adminEmail) {
-      const show = (v: string | null) =>
-        v ? escapeHtml(v) : "No especificado";
+      const show = (v: string | null) => (v ? escapeHtml(v) : "No especificado");
+      const agencyName = agency.name;
 
-      try {
-        await sendEmail({
-          to: adminEmail,
-          subject: `Nuevo lead capturado en ${agency.name}`,
-          html: `
-            <p>Tu asistente de voz acaba de capturar un nuevo lead.</p>
-            <ul>
-              <li><strong>Nombre:</strong> ${show(name)}</li>
-              <li><strong>Contacto:</strong> ${show(contact)}</li>
-              <li><strong>Propiedad de interés:</strong> ${show(propertyOfInterest)}</li>
-              <li><strong>Horario preferido:</strong> ${show(preferredVisitTime)}</li>
-            </ul>
-            <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard/leads">Ver todos tus leads</a></p>
-          `,
-        });
-      } catch (emailErr) {
-        console.error("Error enviando notificación de lead:", emailErr);
-      }
+      after(async () => {
+        try {
+          await sendEmail({
+            to: adminEmail,
+            subject: `Nuevo lead capturado en ${agencyName}`,
+            html: `
+              <p>Tu asistente de voz acaba de capturar un nuevo lead.</p>
+              <ul>
+                <li><strong>Nombre:</strong> ${show(name)}</li>
+                <li><strong>Contacto:</strong> ${show(contact)}</li>
+                <li><strong>Propiedad de interés:</strong> ${show(finalPropertyOfInterest)}</li>
+                <li><strong>Horario preferido:</strong> ${show(preferredVisitTime)}</li>
+              </ul>
+              <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard/leads">Ver todos tus leads</a></p>
+            `,
+          });
+        } catch (emailErr) {
+          console.error("Error enviando notificación de lead:", emailErr);
+        }
+      });
     }
 
     return NextResponse.json({ received: true });
