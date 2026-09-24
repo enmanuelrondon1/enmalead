@@ -1,5 +1,5 @@
 // src/lib/rate-limit.ts
-import { NextRequest, NextResponse, after } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createHash } from "crypto";
 import { prisma } from "@/lib/prisma";
 
@@ -14,7 +14,7 @@ type RateLimitResult = {
   retryAfter: number;
 };
 
-export function getClientIp(req: NextRequest): string {
+export function getClientIp(req: { headers: Headers }): string {
   const realIp = req.headers.get("x-real-ip");
   if (realIp) return realIp.trim();
 
